@@ -52,5 +52,7 @@ class CreatePoll extends Component
         }
 
         $this->reset();
+
+        $this->dispatch('pollCreated');
     }
 }
