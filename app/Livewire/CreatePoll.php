@@ -8,7 +8,22 @@ use Livewire\Component;
 class CreatePoll extends Component
 {
     public $title = '';
+
     public $options = ['First'];
+
+    protected $rules = [
+        'title'=>'required|min:3|max:30',
+        'options'=>'required|array|min:1|max:10',
+        'options.*'=>'required|min:3|max:20'
+    ];
+
+    protected $messages = [
+        'options.*'=>'The option can\'t be empty'
+    ];
+
+    public function updated($propertyName) {
+        $this->validateOnly($propertyName);
+    }
 
     public function render()
     {
@@ -25,6 +40,8 @@ class CreatePoll extends Component
     }
 
     public function createPoll(){
+        $this->validate();
+
         $poll = Poll::create([
             'title'=>$this->title
         ]);
